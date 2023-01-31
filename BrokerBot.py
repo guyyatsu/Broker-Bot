@@ -1,7 +1,8 @@
 import telepot
 from time import sleep
 from CredentialManagement import CredentialManagement
-from tools.AccountData import AccountData
+from tools.AccountData import AccountEnumeration
+from alpaca.trading.client import TradingClient
 
 
 """ CREDENTIALS """

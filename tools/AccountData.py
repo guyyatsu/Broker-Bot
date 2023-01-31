@@ -1,7 +1,7 @@
 from alpaca.trading.client import TradingClient
 from alpaca.trading.enums import AssetClass
 
-class AccountData:
+class AccountEnumeration:
   def __init__(self, client):
     self.client = client
 
