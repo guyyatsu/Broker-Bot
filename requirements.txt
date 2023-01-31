@@ -1,0 +1,3 @@
+CredentialManagement
+alpaca-py
+telepot
