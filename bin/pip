@@ -1,4 +1,4 @@
-#!/server/Automated-Trading-System/bin/python3
+#!/server/Broker-Bot/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
