@@ -118,7 +118,6 @@ class AccountEnumeration:
         message += f"\nQuantity: {position['quantity']}"
         message += f"\nValue: {position['market value']}"
         message += f"\nBuy-In: {position['cost basis']}"
-  
       return message
   
     # For programmatic usage.
