@@ -2,8 +2,20 @@ from alpaca.trading.client import TradingClient
 from alpaca.trading.enums import AssetClass
 
 class AccountEnumeration:
-  def __init__(self, client):
-    self.client = client
+  def __init__(self, keyfile, database, paperage=False):
+
+    # Unlock the Alpaca.Markets API key and secret.
+    credentials = CredentialManagement.MultiKeyAPICredentials(
+      platform="alpaca", credabase=database, keyfile=keyfile
+    )
+
+    # Pull the credentials from the dictionary.
+    key = credentials['key']; secret = credentials['secret']
+
+
+    # Initialize the trade client with key and secret.
+    self.client = TradingClient(key, secret, paper=paperage)
+
 
   def GetAccount(self, cmdline=True):
   
