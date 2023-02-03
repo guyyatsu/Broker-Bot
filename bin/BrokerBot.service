@@ -7,9 +7,10 @@ StartLimitIntervalSec=0
 Type=simple
 Restart=always
 RestartSec=1
-User=guyyatsu
+User=hunter
 WorkingDirectory=/server/finance/Broker-Bot
-ExecStart=/server/finance/Broker-Bot/bin/python3 Broker-Bot.py &
+VIRTUAL_ENV=/server/finance/Broker-Bot/
+ExecStart=python3 BrokerBot.py
 
 [Install]
 WantedBy=multi-user.target
