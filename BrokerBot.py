@@ -2,7 +2,7 @@ import telepot
 from time import sleep
 import argparse
 from CredentialManagement import CredentialManagement
-from tools.AccountData import AccountEnumeration
+from AlpacaAccountData.AccountData import AccountEnumeration
 
 
 if __name__ == "__main__":
@@ -39,7 +39,7 @@ if __name__ == "__main__":
 
 
   """ End-User Interface """
-  def BrokerBot(message, keyfile, database):
+  def BrokerBot(message):
     """
     The Broker Bot manages communications between the user and the daemon.
     """
@@ -59,6 +59,6 @@ if __name__ == "__main__":
     if command == "/getassets": bot.sendMessage(telegramID, brokerage_account.ListAssets())
 
 
-  bot.message_loop(BrokerBot, keyfile)
+  bot.message_loop(BrokerBot)
   while True:
     sleep(1)
