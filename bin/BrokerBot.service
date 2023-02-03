@@ -1,0 +1,15 @@
+[Unit]
+Description=Lab-93 Broker Bot Daemon
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=guyyatsu
+WorkingDirectory=/server/finance/Broker-Bot
+ExecStart=/server/finance/Broker-Bot/bin/python3 Broker-Bot.py &
+
+[Install]
+WantedBy=multi-user.target
