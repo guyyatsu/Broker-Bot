@@ -11,12 +11,16 @@ if __name__ == "__main__":
   parser = argparse.ArgumentParser()
   parser.add_argument("-K", "--keyfile", help="Designate a file containing an ssh key for encryption.")
   parser.add_argument("-D", "--database", help="Designate a sqlite3 database file.")
+  parser.add_argument("-l", "--log-level", action="count")
 
   arguments = parser.parse_args()
 
+  if arguments.log_level == 0: loglevel = logging.INFO
+  elif arguments.log_level > 0: loglevel = logging.DEBUG
+
   logfile = "/server/administrator/logs/Broker-Bot.log"
   with open(logfile, 'w') as clearing_log: clearing_log.write("")
-  logging.basicConfig(filename=logfile, level=logging.DEBUG)
+  logging.basicConfig(filename=logfile, level=loglevel)
 
 
   """ CREDENTIALS """
