@@ -2,7 +2,7 @@ import telepot
 from time import sleep
 import logging
 import argparse
-from CredentialManagement import CredentialManagement
+from Lab93_Cryptogram import CredentialManagement
 from AlpacaAccountData.AccountData import AccountEnumeration
 
 
