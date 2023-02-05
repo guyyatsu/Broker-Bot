@@ -1,3 +1,4 @@
-CredentialManagement
+Lab93-Cryptogram==0.0.2
 telepot
 AlpacaAccountData==0.0.3
+pyexcel-ods
