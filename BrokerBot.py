@@ -3,7 +3,7 @@ from time import sleep
 import logging
 import argparse
 from Lab93_Cryptogram import CredentialManagement
-from AlpacaAccountData.AccountData import AccountEnumeration
+from Lab93_TradeClient.AccountData import AccountEnumeration
 
 
 if __name__ == "__main__":
@@ -36,9 +36,15 @@ if __name__ == "__main__":
     credabase=arguments.credential,
     keyfile=arguments.keyfile
   )
+
+  # Gather Alpaca API credentials.
+  alpacaAPI = CredentialManagement.MultiKeyAPICredentials(
+    platform="alpaca",
+    credabase=arguments.credential,
+    keyfile=arguments.keyfile
+  )
  
   # Initialize the Telegram bot with the platforms API key.
-  logging.debug(f"Creating Telegram bot.")
   bot = telepot.Bot(
     CredentialManagement.SingleKeyAPICredentials(
       platform="telegram",
@@ -46,7 +52,6 @@ if __name__ == "__main__":
       keyfile=arguments.keyfile
     )
   )
-  logging.debug(f"Bot\n{bot}\nCreated.")
 
 
   """ End-User Interface """
@@ -55,14 +60,10 @@ if __name__ == "__main__":
     The Broker Bot manages communications between the user and the daemon.
     """
   
-    logging.debug("Contacting Alpaca brokerage.")
-    brokerage_account = AccountEnumeration(keyfile, database)
-    logging.debug(f"Got details for brokerage.")
+    brokerage_account = AccountEnumeration(key=alpacaAPI["key"], secret=alpacaAPI["secret"])
   
-    logging.debug("Recieving incoming transmission:")
     packet_data = message["text"].split(" ")
     command = str(packet_data[0])
-    logging.debug(f"Recieved command: {command}")
   
     # Get all account data.
     if command == "/account": bot.sendMessage(telegramID, brokerage_account.GetAccount())
