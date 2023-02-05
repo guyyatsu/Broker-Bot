@@ -12,13 +12,20 @@ if __name__ == "__main__":
   parser.add_argument("-K", "--keyfile", help="Designate a file containing an ssh key for encryption.", required=True)
   parser.add_argument("-C", "--credential", help="Designate a credential database.", required=True)
   parser.add_argument("-l", "--log-level", action="count")
+  parser.add_argument("-L", "--log-file", help="Designate a file for logging.")
 
   arguments = parser.parse_args()
 
+
+  # Set log-level to INFO by default; otherwise DEBUG.
   if arguments.log_level == 0: loglevel = logging.INFO
   elif arguments.log_level > 0: loglevel = logging.DEBUG
 
-  logfile = "/server/administrator/logs/Broker-Bot.log"
+  # Set logfile within directory unless specified.
+  if arguments.log_file: logfile = arguments.log_file
+  else: logfile = "./.log"
+
+  # Rotate the log every time it's called.
   with open(logfile, 'w') as clearing_log: clearing_log.write("")
   logging.basicConfig(filename=logfile, level=loglevel)
 
