@@ -2,37 +2,39 @@ import telepot
 from time import sleep
 import logging
 import argparse
-from CredentialManagement import CredentialManagement
+from Lab93_Cryptogram import CredentialManagement
 from AlpacaAccountData.AccountData import AccountEnumeration
 
 
 if __name__ == "__main__":
 
   parser = argparse.ArgumentParser()
-  parser.add_argument("-K", "--keyfile", help="Designate a file containing an ssh key for encryption.")
-  parser.add_argument("-D", "--database", help="Designate a sqlite3 database file.")
+  parser.add_argument("-K", "--keyfile", help="Designate a file containing an ssh key for encryption.", required=True)
+  parser.add_argument("-C", "--credential", help="Designate a credential database.", required=True)
+  parser.add_argument("-l", "--log-level", action="count")
+  parser.add_argument("-L", "--log-file", help="Designate a file for logging.")
 
   arguments = parser.parse_args()
 
-  logfile = "/server/administrator/logs/Broker-Bot.log"
+
+  # Set log-level to INFO by default; otherwise DEBUG.
+  if arguments.log_level == 0: loglevel = logging.INFO
+  elif arguments.log_level > 0: loglevel = logging.DEBUG
+
+  # Set logfile within directory unless specified.
+  if arguments.log_file: logfile = arguments.log_file
+  else: logfile = "./.log"
+
+  # Rotate the log every time it's called.
   with open(logfile, 'w') as clearing_log: clearing_log.write("")
-  logging.basicConfig(filename=logfile, level=logging.DEBUG)
+  logging.basicConfig(filename=logfile, level=loglevel)
 
-
-  """ CREDENTIALS """
-  if arguments.keyfile: keyfile = arguments.keyfile
-  else: keyfile = "/server/administrator/.credentials/.key"
-  logging.info(f"Keyfile: {keyfile}")
-
-  if arguments.database: database = arguments.database
-  else: database = "/server/administrator/.credentials/credentials.db"
-  logging.info(f"Database: {database}")
 
   # Gather the administrators telegram user id so the bot only responds to him.
   telegramID =  CredentialManagement.SingleKeyAPICredentials(
     platform="telegram_admin",
-    credabase=database,
-    keyfile=keyfile
+    credabase=arguments.credential,
+    keyfile=arguments.keyfile
   )
  
   # Initialize the Telegram bot with the platforms API key.
@@ -40,8 +42,8 @@ if __name__ == "__main__":
   bot = telepot.Bot(
     CredentialManagement.SingleKeyAPICredentials(
       platform="telegram",
-      credabase=database,
-      keyfile=keyfile
+      credabase=arguments.credential,
+      keyfile=arguments.keyfile
     )
   )
   logging.debug(f"Bot\n{bot}\nCreated.")
